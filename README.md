@@ -1,4 +1,4 @@
-[![Known Vulnerabilities](https://snyk.io/test/github/StrongMind/canvas-google-drive-connector/badge.svg?targetFile=Gemfile.lock)](https://snyk.io/test/github/learningtapestry/canvas-google-drive-connector?targetFile=Gemfile.lock)
+[![Known Vulnerabilities](https://snyk.io/test/github/StrongMind/canvas-google-drive-connector/badge.svg?targetFile=Gemfile.lock)](https://snyk.io/test/github/StrongMind/canvas-google-drive-connector?targetFile=Gemfile.lock)
 
 # CanvasLMS / GoogleDrive integration
 
