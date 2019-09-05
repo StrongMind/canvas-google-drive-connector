@@ -6,6 +6,10 @@ services:
   - docker
   - postgresql
 
+before_script:
+  - sudo /etc/init.d/mysql stop
+  - sudo /etc/init.d/postgresql stop
+  
 before_install:
 # #- docker-compose pull
  - docker-compose build
