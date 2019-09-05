@@ -1,0 +1,32 @@
+version: "3"
+services:
+  web:
+    image: "ruby:2.5.0"
+    ports:
+      - "5000:5000"
+    links:
+      - "db"
+      - "redis"
+    environment:
+      - POSTGRESQL_ADDRESS=db
+      - POSTGRESQL_DATABASE=google-lti-connector
+      - POSTGRESQL_USERNAME=google-lti-connector
+      - POSTGRESQL_PASSWORD=password
+      - POSTGRESQL_PORT=5432
+      - LTI_APP_URL=http://127.0.0.1:5000
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - .:/web
+    working_dir: /web
+    command: bash -c "bundle install && bundle exec rackup -p 5000 -o 0.0.0.0"
+  db:
+    image: "postgres"
+    environment:
+      - POSTGRES_USER=google-lti-connector
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+  redis:                                                                          
+    image: redis
+    ports:
+      - "6379:6379" 

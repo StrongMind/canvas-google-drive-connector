@@ -3,6 +3,8 @@
 ruby '2.5.0'
 source 'http://rubygems.org'
 
+gem 'execjs'
+gem 'therubyracer'
 gem 'activerecord', '~> 5.1', '>= 5.1.4'
 gem 'dotenv', '~> 2.2', '>= 2.2.1'
 gem 'google-api-client', '~> 0.19.6'

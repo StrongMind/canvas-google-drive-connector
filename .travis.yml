@@ -1,5 +1,38 @@
+sudo: required
+
 language: ruby
 
+services: 
+  - docker
+
 before_install:
-  - gem update --system
-  - gem install bundler
+# #- docker-compose pull
+ - docker-compose build
+ - docker-compose up -d
+ - sleep 45
+ - docker-compose ps
+ - bundle install 
+
+script:
+ - bundle exec rake db:test:prepare
+ - bundle exec rspec
+
+after_success:
+  - docker-compose stop
+
+after_failure:
+  - docker-compose stop
+  - docker-compose logs
+
+# deploy:
+#   provider: elasticbeanstalk
+#   access_key_id: $ACCESSKEYID
+#   secret_access_key:
+#     secure: "$SECRETACCESSKEY"
+#   region: "ca-central-1"  
+#   app: "google-lti-connector"
+#   env: "production"
+#   bucket_name: "elasticbeanstalk-ca-central-1-882371129764"
+#   on:
+#     branch: master
+  
