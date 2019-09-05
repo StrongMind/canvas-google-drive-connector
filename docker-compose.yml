@@ -1,7 +1,7 @@
 version: "3"
 services:
   web:
-    image: "ruby:2.5.0"
+    image: "ruby:2.5.1"
     ports:
       - "5000:5000"
     links:
@@ -20,7 +20,7 @@ services:
     working_dir: /web
     command: bash -c "bundle install && bundle exec rackup -p 5000 -o 0.0.0.0"
   db:
-    image: "postgres:9.4"
+    image: "postgres:9.4.1"
     environment:
       - POSTGRES_USER=google-lti-connector
       - POSTGRES_PASSWORD=password
