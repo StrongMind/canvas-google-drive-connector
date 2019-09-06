@@ -15,6 +15,10 @@ services:
       - POSTGRESQL_PORT=5432
       - LTI_APP_URL=http://127.0.0.1:5000
       - REDIS_URL=redis://redis:6379
+      - SESSION_SECRET=afakesessionsecret
+      - GOOGLE_KEY=notarealkey
+      - GOOGLE_SECRET=notarealsecret
+      - REDIS_URL=redis://localhost:6379
     volumes:
       - .:/web
     working_dir: /web
