@@ -20,7 +20,7 @@ services:
     working_dir: /web
     command: bash -c "bundle install && bundle exec rackup -p 5000 -o 0.0.0.0"
   db:
-    image: "postgres:9.4.1"
+    image: "postgres:10"
     environment:
       - POSTGRES_USER=google-lti-connector
       - POSTGRES_PASSWORD=password
