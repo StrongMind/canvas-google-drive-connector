@@ -6,7 +6,7 @@ services:
       - "5000:5000"
     links:
       - "db"
-      - "redis"
+      - "cache"
     environment:
       - POSTGRESQL_ADDRESS=db
       - POSTGRESQL_DATABASE=google-lti-connector
@@ -14,7 +14,7 @@ services:
       - POSTGRESQL_PASSWORD=password
       - POSTGRESQL_PORT=5432
       - LTI_APP_URL=http://127.0.0.1:5000
-      - REDIS_URL=redis
+      - REDIS_URL=redis://cache:6379
       - SESSION_SECRET=afakesessionsecret
       - GOOGLE_KEY=notarealkey
       - GOOGLE_SECRET=notarealsecret
@@ -29,7 +29,7 @@ services:
       - POSTGRES_PASSWORD=password
     ports:
       - "5432"
-  redis:                                                                          
+  cache:                                                                          
     image: redis
     ports:
       - "6379:6379" 
