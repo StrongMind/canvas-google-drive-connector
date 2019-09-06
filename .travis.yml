@@ -11,8 +11,8 @@ before_install:
  - bundle install 
 
 script:
- - bundle exec rake db:test:prepare
- - bundle exec rspec
+ - docker-compose exec web bundle exec rake db:test:prepare
+ - docker-compose exec web bundle exec rspec
 
 after_success:
   - docker-compose stop
