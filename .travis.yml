@@ -21,20 +21,24 @@ script:
 
 after_success:
   - docker-compose stop
+  # - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  # - docker build -t strongmind/canvas-google-lti-connector .
+  # - docker images
+  # - docker tag strongmind/canvas-google-lti-connector:latest $DOCKER_USERNAME/strongmind/canvas-google-lti-connector:production
+  # - docker push $DOCKER_USERNAME/strongmind/canvas-google-lti-connector:production
 
 after_failure:
   - docker-compose stop
   - docker-compose logs
 
-# deploy:
-#   provider: elasticbeanstalk
-#   access_key_id: $ACCESSKEYID
-#   secret_access_key:
-#     secure: "$SECRETACCESSKEY"
-#   region: "ca-central-1"  
-#   app: "google-lti-connector"
-#   env: "production"
-#   bucket_name: "elasticbeanstalk-ca-central-1-882371129764"
-#   on:
-#     branch: master
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $AWSACCESSKEYID
+  secret_access_key:
+    secure: $AWSSECRETACCESSKEY
+  region: us-west-2  
+  app: "google-lti-connector"
+  env: "production"
+  on:
+    branch: master
   
