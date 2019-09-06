@@ -14,11 +14,10 @@ services:
       - POSTGRESQL_PASSWORD=password
       - POSTGRESQL_PORT=5432
       - LTI_APP_URL=http://127.0.0.1:5000
-      - REDIS_URL=redis://redis:6379
+      - REDIS_URL=redis
       - SESSION_SECRET=afakesessionsecret
       - GOOGLE_KEY=notarealkey
       - GOOGLE_SECRET=notarealsecret
-      - REDIS_URL=redis://localhost:6379
     volumes:
       - .:/web
     working_dir: /web
@@ -29,7 +28,7 @@ services:
       - POSTGRES_USER=google-lti-connector
       - POSTGRES_PASSWORD=password
     ports:
-      - "5432"
+      - "5432:5432"
   redis:                                                                          
     image: redis
     ports:
