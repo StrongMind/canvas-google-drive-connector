@@ -37,7 +37,7 @@ deploy:
   secret_access_key:
     secure: $AWSSECRETACCESSKEY
   region: us-west-2  
-  app: "google-lti-connector"
+  app: "canvas-google-lti-connector"
   env: "production"
   bucket_name: "elasticbeanstalk-us-west-2-448312246740"
   on:
