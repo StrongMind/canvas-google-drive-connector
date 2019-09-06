@@ -5,6 +5,10 @@ language: ruby
 services: 
   - docker
 
+env:
+  - GOOGLE_SECRET=notarealsecret
+  - GOOGLE_KEY=notarealkey
+
 before_install:
  - docker-compose build
  - docker-compose up -d
