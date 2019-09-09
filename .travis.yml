@@ -21,16 +21,18 @@ script:
 
 after_success:
   - docker-compose stop
-  if: branch = master
-    - docker --version  
-    - pip install --user awscli
-    - export PATH=$PATH:$HOME/.local/bin 
-    - eval $(aws ecr get-login --region us-west-1) 
-    - docker build -t strongmind/google-lti-connector .
-    - docker tag strongmind/google-lti-connector:latest 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest
-    - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest
 
 after_failure:
   - docker-compose stop
   - docker-compose logs
   
+deploy:
+  - on: 
+    branch: master
+      - docker --version  
+      - pip install --user awscli
+      - export PATH=$PATH:$HOME/.local/bin 
+      - eval $(aws ecr get-login --region us-west-1) 
+      - docker build -t strongmind/google-lti-connector .
+      - docker tag strongmind/google-lti-connector:latest 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest
+      - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest
