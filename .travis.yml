@@ -21,11 +21,14 @@ script:
 
 after_success:
   - docker-compose stop
-  # - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  # - docker build -t strongmind/canvas-google-lti-connector .
-  # - docker images
-  # - docker tag strongmind/canvas-google-lti-connector:latest $DOCKER_USERNAME/strongmind/canvas-google-lti-connector:production
-  # - docker push $DOCKER_USERNAME/strongmind/canvas-google-lti-connector:production
+  if: branch = master
+    - docker --version  
+    - pip install --user awscli
+    - export PATH=$PATH:$HOME/.local/bin 
+    - eval $(aws ecr get-login --region us-west-1) 
+    - docker build -t strongmind/google-lti-connector .
+    - docker tag strongmind/google-lti-connector:latest 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest
+    - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest
 
 after_failure:
   - docker-compose stop
