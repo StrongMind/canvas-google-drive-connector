@@ -11,9 +11,11 @@ env:
     - GOOGLE_KEY=notarealkey
 
 before_install:
- - docker-compose build
- - docker-compose up -d
- - bundle install 
+  - docker-compose build
+  - docker-compose up -d
+  - bundle install 
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
 
 script:
  - docker-compose exec google-lti-web bundle exec rake db:test:prepare
