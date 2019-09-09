@@ -31,11 +31,11 @@ after_failure:
 deploy:
   - on: 
     branch: master
-      - aws configure set aws_access_key_id $AWSACCESSKEYID
-      - aws configure set aws_secret_access_key $AWSSECRETACCESSKEY
       - docker --version  
       - pip install --user awscli
+      - aws configure set aws_access_key_id $AWSACCESSKEYID
+      - aws configure set aws_secret_access_key $AWSSECRETACCESSKEY
       - export PATH=$PATH:$HOME/.local/bin 
-      - eval $(aws ecr get-login --region us-west-1) 
+      - eval $(aws ecr get-login --region us-west-2) 
       - docker tag strongmind/google-lti-connector:latest 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest
       - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest
