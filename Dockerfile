@@ -1,16 +1,21 @@
 FROM ruby:2.5.0
 
-ENV LC_ALL C.UTF-8
+RUN apt-get update && \
+    apt-get install -y net-tools
 
-RUN mkdir -p /app/vendor
-WORKDIR /app
-ENV PATH /app/bin:$PATH
+# Install gems
+ENV APP_HOME /app
+ENV HOME /root
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+COPY Gemfile* $APP_HOME/
+RUN bundle install
 
-COPY Gemfile Gemfile.lock /app/
-RUN bundle install --local -j $(nproc)
+# Upload source
+COPY . $APP_HOME
 
-COPY . /app/
+# Start server
+ENV PORT 3000
+EXPOSE 3000
 
-EXPOSE 80
-
-CMD [ "bundle", "exec", "rackup", "-o", "0.0.0.0", "-p", "80", "config.ru" ]
+CMD [ "bundle", "exec", "rackup", "-o", "0.0.0.0", "-p", "3000", "config.ru" ] 

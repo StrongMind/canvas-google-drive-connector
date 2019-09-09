@@ -1,6 +1,7 @@
 version: "3"
 services:
-  web:
+  "google-lti-web":
+    container_name: "google-lti-web"
     image: "ruby:2.5.0"
     ports:
       - "5000:5000"
