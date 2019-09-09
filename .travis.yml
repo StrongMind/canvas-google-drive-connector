@@ -37,6 +37,5 @@ deploy:
       - pip install --user awscli
       - export PATH=$PATH:$HOME/.local/bin 
       - eval $(aws ecr get-login --region us-west-1) 
-      - docker build -t strongmind/google-lti-connector .
       - docker tag strongmind/google-lti-connector:latest 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest
       - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest
