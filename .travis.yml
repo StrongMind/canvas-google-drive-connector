@@ -4,18 +4,11 @@ language: ruby
 services: 
   - docker
 
-addons:
-  apt:
-    sources:
-      - deadsnakes # source required so it finds the package definition below
-    packages:
-      - python3.6
-
 before_install:
   - docker-compose build
   - docker-compose up -d
   - bundle install 
-  - pip install --user awscli
+  - python3 -m pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
 
 script:
@@ -28,6 +21,7 @@ after_success:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin 
   - eval $(aws ecr get-login --region us-west-2) 
+  - docker build -t strongmind/google-lti-connector .
   - docker tag strongmind/google-lti-connector 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT
   - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT
 
