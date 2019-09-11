@@ -33,8 +33,8 @@ after_success:
   - export PATH=$PATH:$HOME/.local/bin 
   - eval $(aws ecr get-login --region us-west-2) 
   - docker build -t strongmind/google-lti-connector .
-  - docker tag strongmind/google-lti-connector $AWS_ACCOUNT_ID.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT
-  - docker push $AWS_ACCOUNT_ID.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT
+  - docker tag strongmind/google-lti-connector 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT
+  - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT
 
 after_failure:
   - docker-compose stop
