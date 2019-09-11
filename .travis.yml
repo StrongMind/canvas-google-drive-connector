@@ -4,9 +4,14 @@ language: ruby
 services: 
   - docker
 
+  addons:
+  apt:
+    sources:
+      - deadsnakes # source required so it finds the package definition below
+    packages:
+      - python3.6
+
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install python3
   - docker-compose build
   - docker-compose up -d
   - bundle install 
