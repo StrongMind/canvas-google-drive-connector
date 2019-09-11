@@ -11,6 +11,9 @@ env:
     - GOOGLE_KEY=notarealkey
 
 before_install:
+  - sudo apt-get -y install python3-pip python-dev
+  - python3 -V
+  - pip3 -V
   - docker-compose build
   - docker-compose up -d
   - bundle install 
