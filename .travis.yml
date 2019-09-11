@@ -22,6 +22,7 @@ before_install:
   - bundle install
   - pip3 install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
+  - echo $TRAVIS_COMMIT
 
 script:
  - docker-compose exec google-lti-web bundle exec rake db:test:prepare
