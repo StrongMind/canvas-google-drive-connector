@@ -4,13 +4,23 @@ language: ruby
 services: 
   - docker
 
+addons:
+  apt:
+    packages: 
+      - build-essential
+      - libpq-dev
+      - libssl-dev
+      - openssl
+      - libffi-dev
+      - zlib1g-dev
+      - python3-pip
+      - python3-dev
+
 before_install:
   - docker-compose build
   - docker-compose up -d
   - bundle install
-  - which pip 
-  - cat /etc/issue
-  # - pip install --user awscli
+  - pip3 install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
 
 script:
