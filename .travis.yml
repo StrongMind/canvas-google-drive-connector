@@ -1,14 +1,12 @@
 sudo: required
 
-# Need updated python for aws cli, also has ruby
-language: python
-python: 3.6
+language: ruby
 services: 
   - docker
 
 before_install:
-  - python3 -V
-  - pip3 -V
+  - sudo apt-get update
+  - sudo apt-get install python3
   - docker-compose build
   - docker-compose up -d
   - bundle install 
