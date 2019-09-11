@@ -24,15 +24,14 @@ script:
 
 after_success:
   - docker-compose stop
-
-after_failure:
-  - docker-compose stop
-  - docker-compose logs
-  
-deploy:
   - docker --version  
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin 
   - eval $(aws ecr get-login --region us-west-2) 
   - docker tag strongmind/google-lti-connector 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT
   - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT
+
+after_failure:
+  - docker-compose stop
+  - docker-compose logs
+  
