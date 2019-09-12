@@ -41,4 +41,3 @@ after_failure:
   - docker-compose stop
   - docker-compose logs
   
-docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:820d4267e42e5830ed57044b0dc36fd753581790
