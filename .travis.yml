@@ -22,7 +22,7 @@ before_install:
   - bundle install
   - pip3 install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
-  - echo "448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT"
+  - echo "448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:eval $($TRAVIS_COMMIT)"
 
 script:
  - docker-compose exec google-lti-web bundle exec rake db:test:prepare
@@ -35,8 +35,8 @@ after_success:
   - eval $(aws ecr get-login --region us-west-2 --no-include-email)
   - docker build -t strongmind/google-lti-connector:$TRAVIS_COMMIT .
   - docker ps
-  - docker tag google-lti-connector 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT
-  - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:$TRAVIS_COMMIT 
+  - docker tag google-lti-connector:${TRAVIS_COMMIT} 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:${TRAVIS_COMMIT}
+  - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:${TRAVIS_COMMIT} 
 
 after_failure:
   - docker-compose stop
