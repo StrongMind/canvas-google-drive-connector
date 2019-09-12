@@ -6,7 +6,7 @@ RUN apt-get update && \
 # Install gems
 ENV APP_HOME /app
 ENV HOME /root
-RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME; exit 0
 WORKDIR $APP_HOME
 COPY Gemfile* $APP_HOME/
 RUN bundle install
