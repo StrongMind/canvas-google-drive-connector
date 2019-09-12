@@ -29,7 +29,7 @@ helpers AppHelpers
 
 get '/' do
   # 'Canvas-GoogleDrive-Connector'
-  "LTI ENV: #{ENV['LTI_APP_URL']}"
+  "LTI ENV: #{ENV.fetch('LTI_APP_URL')}"
 end
 
 #
