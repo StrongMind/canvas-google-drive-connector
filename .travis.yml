@@ -1,5 +1,8 @@
 sudo: required
 
+env:
+  - COMMIT=$TRAVIS_COMMIT
+
 language: ruby
 services: 
   - docker
@@ -27,7 +30,7 @@ script:
   - docker-compose exec google-lti-web bundle exec rspec
 
 after_success:
-  - COMMIT=${TRAVIS_COMMIT} docker-compose build
+  - docker-compose build
   - docker-compose stop
   - docker --version  
   - export PATH=$PATH:$HOME/.local/bin 
