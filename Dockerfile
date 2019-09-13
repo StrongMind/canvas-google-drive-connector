@@ -15,7 +15,7 @@ RUN bundle install
 COPY . $APP_HOME
 
 # Start server
-ENV PORT 80
-EXPOSE 80
+ENV PORT 3000
+EXPOSE 3000
 
-CMD [ "bundle", "exec", "rackup", "-o", "0.0.0.0", "-p", "80", "config.ru" ] 
+CMD [ "bundle", "exec", "rackup", "-o", "0.0.0.0", "-p", "3000", "config.ru" ] 
