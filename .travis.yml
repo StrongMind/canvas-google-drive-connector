@@ -30,13 +30,13 @@ script:
   - docker-compose exec google-lti-web bundle exec rspec
 
 after_success:
-  - docker-compose build
   - docker-compose stop
+  - docker build -t strongmind/google-lti-connector:$TRAVIS_COMMIT .
   - docker --version  
   - export PATH=$PATH:$HOME/.local/bin 
   - eval $(aws ecr get-login --region us-west-2 --no-include-email)
   - docker ps
-  # - docker tag strongmind/google-lti-connector:${TRAVIS_COMMIT} 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:${TRAVIS_COMMIT}
+  - docker tag strongmind/google-lti-connector:${TRAVIS_COMMIT} 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:${TRAVIS_COMMIT}
   - docker push 448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:${TRAVIS_COMMIT} 
 
 after_failure:
