@@ -5,7 +5,7 @@ services:
     container_name: "google-lti-connector"
     image: strongmind/google-lti-connector:${COMMIT}
     ports:
-      - "5000:5000"
+      - "3000:3000"
     links:
       - "db"
       - "cache"
@@ -15,7 +15,7 @@ services:
       - POSTGRESQL_USERNAME=google-lti-connector
       - POSTGRESQL_PASSWORD=password
       - POSTGRESQL_PORT=5432
-      - LTI_APP_URL=http://127.0.0.1:5000
+      - LTI_APP_URL=http://127.0.0.1:3000
       - REDIS_URL=redis://cache:6379
       - SESSION_SECRET=afakesessionsecret
       - GOOGLE_KEY=notarealkey
@@ -23,7 +23,7 @@ services:
     volumes:
       - .:/web
     working_dir: /web
-    command: bash -c "bundle install && bundle exec rackup -p 5000 -o 0.0.0.0"
+    command: bash -c "bundle install && bundle exec rackup -p 3000 -o 0.0.0.0"
   db:
     image: "postgres:10"
     environment:
