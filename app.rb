@@ -28,7 +28,11 @@ helpers AppHelpers
 # Config
 
 get '/' do
-  'Canvas-GoogleDrive-Connector'
+  'healthy'
+end
+
+get '/env' do
+  ENV
 end
 
 #
