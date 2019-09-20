@@ -16,5 +16,6 @@ COPY . $APP_HOME
 
 # Start server
 ENV PORT 3000
+EXPOSE 3000
 
 CMD [ "bundle", "exec", "rackup", "-o", "0.0.0.0", "-p", "3000", "config.ru" ] 
