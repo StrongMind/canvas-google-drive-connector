@@ -5,7 +5,7 @@ services:
     container_name: "google-lti-connector"
     # image: strongmind/google-lti-connector:${COMMIT}
     ports:
-      - "3000:3000"
+      - "5000:5000"
     links:
       - "db"
       - "cache"
@@ -23,7 +23,7 @@ services:
     volumes:
       - .:/web
     working_dir: /web
-    command: bash -c "bundle install && bundle exec rackup -p 3000 -o 0.0.0.0"
+    command: bash -c "bundle install && bundle exec rackup -p 5000 -o 0.0.0.0"
   db:
     image: "postgres:10"
     environment:

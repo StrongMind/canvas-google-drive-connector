@@ -14,6 +14,10 @@ RUN bundle install
 # Upload source
 COPY . $APP_HOME
 
+# DB migrations
+RUN bundle exec rake db:migrate
+RUN bundle exec rake assets:clean assets:precompile
+
 # Start server
 ENV PORT 5000
 EXPOSE 5000
