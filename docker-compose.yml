@@ -3,18 +3,18 @@ services:
   "google-lti-web":
     build: .
     container_name: "google-lti-connector"
-    image: strongmind/google-lti-connector:${COMMIT}
+    # image: strongmind/google-lti-connector:${COMMIT}
     ports:
       - "3000:3000"
     links:
       - "db"
       - "cache"
     environment:
-      - POSTGRESQL_ADDRESS=db
-      - POSTGRESQL_DATABASE=google-lti-connector
-      - POSTGRESQL_USERNAME=google-lti-connector
-      - POSTGRESQL_PASSWORD=password
-      - POSTGRESQL_PORT=5432
+      - RDS_HOST=db
+      - RDS_DB_NAME=google-lti-connector
+      - RDS_USERNAME=google-lti-connector
+      - RDS_PASSWORD=password
+      - RDS_PORT=5432
       - LTI_APP_URL=http://127.0.0.1:3000
       - REDIS_URL=redis://cache:6379
       - SESSION_SECRET=afakesessionsecret
@@ -26,9 +26,6 @@ services:
     command: bash -c "bundle install && bundle exec rackup -p 3000 -o 0.0.0.0"
   db:
     image: "postgres:10"
-    environment:
-      - POSTGRES_USER=google-lti-connector
-      - POSTGRES_PASSWORD=password
     ports:
       - "5432"
   cache:                                                                          
