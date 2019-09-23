@@ -2,28 +2,28 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  host: <%= ENV['POSTGRESQL_ADDRESS'] %>
-  database: <%= ENV['POSTGRESQL_DATABASE'] %>
-  username: <%= ENV['POSTGRESQL_USERNAME'] %>
-  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
-  port: <%= ENV.fetch('POSTGRESQL_PORT', 5432) %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  database: <%= ENV['RDS_DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  port: <%= ENV.fetch('RDS_PORT', 5432) %>
 
 production: &production
   <<: *default
-  database: <%= ENV['POSTGRESQL_DATABASE'] %>_production
+  database: <%= ENV['RDS_DB_NAME'] %>_production
 
 staging:
   <<: *production
-  database: <%= ENV['POSTGRESQL_DATABASE'] %>_staging
+  database: <%= ENV['RDS_DB_NAME'] %>_staging
 
 development:
   <<: *default
-  database: <%= ENV['POSTGRESQL_DATABASE'] %>_development
+  database: <%= ENV['RDS_DB_NAME'] %>_development
 
 test:
   <<: *default
-  database: <%= ENV['POSTGRESQL_DATABASE'] %>_test
+  database: <%= ENV['RDS_DB_NAME'] %>_test
 
 qa:
   <<: *default
-  database: <%= ENV['POSTGRESQL_DATABASE'] %>_qa
+  database: <%= ENV['RDS_DB_NAME'] %>_qa
