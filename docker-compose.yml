@@ -26,6 +26,9 @@ services:
     command: bash -c "bundle install && bundle exec rackup -p 3000 -o 0.0.0.0"
   db:
     image: "postgres:10"
+    environment:
+      - POSTGRES_USER=google-lti-connector
+      - POSTGRES_PASSWORD=password
     ports:
       - "5432"
   cache:                                                                          
