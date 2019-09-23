@@ -10,7 +10,7 @@ services:
       - "db"
       - "cache"
     environment:
-      - RDS_HOST=db
+      - RDS_HOSTNAME=db
       - RDS_DB_NAME=google-lti-connector
       - RDS_USERNAME=google-lti-connector
       - RDS_PASSWORD=password
