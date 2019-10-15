@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-	  <title>Canvas/GDrive LTI</title>
+	  <title>StrongMind Google Drive LTI</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<%= Rack::Csrf.metatag(env) %>
@@ -9,8 +9,12 @@
 		<link rel="stylesheet" href="<%= url_for stylesheet_path('app') %>">
   </head>
   <body>
-		<div class="container">
-			<div>
+		<div class="wrapper">
+			<img src="<%= AppHelpers.url_for '/strongmind_logo.svg' %>"
+				 alt="StrongMind Logo"
+				 title="StrongMind Logo"
+				 class="strongmind-logo">
+			<div class="container">
 				<%if @error %>
           <div class="alert alert-error"><%=@error%></div>
 				<% end %>
