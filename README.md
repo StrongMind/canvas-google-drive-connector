@@ -1,174 +1,67 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/StrongMind/canvas-google-drive-connector/badge.svg?targetFile=Gemfile.lock)](https://snyk.io/test/github/StrongMind/canvas-google-drive-connector?targetFile=Gemfile.lock)
 
-# CanvasLMS / GoogleDrive integration
+# Canvas LMS Google Drive Integration LTI
 
-Simple [LTI](http://www.imsglobal.org/activity/learning-tools-interoperability) app for providing
-google-drive integration into [CanvasLMS](http://canvaslms.com/)
+This project allows direct integration of an organization's Google Drive into their Canvas LMS Instance.
 
-Features:
-- allow educators to link/embed gdrive files into course content
-- allow students send gdrive files as part of assignment
+The current Instructure version of the LTI is only compatible with Enterprise hosted Canvas Instances and would not function properly (or at all in most cases) with self hosted instances (like ours).
 
-## Getting Started
+This application is deployed to the [canvas-google-lti-connector](https://us-west-2.console.aws.amazon.com/elasticbeanstalk/home?region=us-west-2#/application/overview?applicationName=canvas-google-lti-connector) app on AWS Elastic Beanstalk app.
 
-This app uses:
-- Ruby 2.5.0 + Sinatra
-- PostgreSQL 9.6
-- Redis
+### Prerequisites
 
-1) Create a Google app on the [Google Developer Console](https://console.developers.google.com).
+This project uses Ruby and [rack](https://rack.github.io/) to provide all of the functionality required for Google Drive integration. 
 
-2) Enable access to the Drive API for the newly created Google app
 
-3) Create credentials for accessing the Google app
-  - When asked where you will be calling the API from, select "Web server"
-  - When asked what data you will be accessing, select "User data"
-  - Under "Authorized Javascript origins" enter the URL where this app is deployed
-  - Under "Authorized redirect URIs" enter the same URL as above, with `/google-auth/callback` at
-    the end
+- [ruby-2.5.0](https://www.ruby-lang.org): `rvm install 2.5.0`
+- [docker](https://docs.docker.com/)
+- [docker-compose](https://docs.docker.com/compose/)
 
-  This will give you the OAuth2 credentials to be used in this app to access
-  the Google app.
+### Env Setup
 
-4) Go to the "Domain verification" tab and verify the domain this app is
-running on.
+This project uses docker-compose to configure and startup instances of the application, postgreSQL DB and redis (reeediss). All of these are required for the application to properly function.
 
-To configure this app with your new credentials, first create your `.env` file by running `cp
-.env.template .env` and then modify with your new Google credentials:
+#### Start the app
+
+From the project root, issue the `docker-compose up -d` command to start all containers in a daemon. This will start all required services and make your application available at [http://localhost:5000](http://localhost:5000)
+
+#### Prepare the DB
+
+When you first start the application, you'll need to create the database and run the migrations. You can do this by executing the below command from the project root:
+
+`docker exec google-lti-connector bundle exec rake db:create db:migrate`
+
+If you create any migrations or need to run just the migrations and not create the DB, you can simply drop the `db:create` task:
+
+`docker exec -it google-lti-connector bundle exec rake db:migrate`
+
+## Deployment
+
+When code changes are merged to master, they are automatically built and a container image is pushed to AWS ECR. The ID used is the commit hash so it's easier to keep versions separate. This can easily be modified in the future to use named versions, or any other type of labeling. 
+
+After the image has been built and pushed to ECR, you can deploy using the [`deploy_gdrive_lti.sh`](https://github.com/StrongMind/canvas_deployment/blob/master/deploy_gdrive_lti.sh) script in the [canvas_deployment](https://github.com/StrongMind/canvas_deployment) repository.
+
+Replace `COMMIT_HASH` wth the actual hash of the image you want to deploy
+
+
+### To deploy production
 
 ```
-SESSION_SECRET=[Generate a string here with SecureRandom.hex(32)]
-GOOGLE_KEY=[Your Google client ID]
-GOOGLE_SECRET=[Your Google client secret]
+./deploy_gdrive_lti.sh production COMMIT_HASH
 ```
 
-Install dependencies and create the database:
+### To deploy dev
+
 ```
-bundle install
-bundle exec rake db:create db:migrate
+./deploy_gdrive_lti.sh dev COMMIT_HASH
 ```
 
-For deploying (not development) you should also precompile assets:
-`bundle exec rake assets:clean assets:precompile`
+### To deploy to a new env
 
-## Run
+New environments can be created as necessary for the Elastic Beanstalk app. This can be done using ansible (or some other infrastructure provisioning) or manually from the AWS console.
 
-For running the server:
-`ruby app.rb`
+### Areas for improvement
 
-you can have an interactive console with the app configured and imported, using:
-`bundle exec rake console`
-
-## Launching from Canvas LMS
-
-To launch the Google Drive Connector app from a Canvas instance, see this wiki:
-
-https://github.com/learningtapestry/canvas-google-drive-connector/wiki/Configuring-the-LTI-application
-
-## tests
-
-uses Rspec: `bundle exec rspec`
-
-you can check the coverage report on `coverage/index.html`
-
-## API
-
-### Config
-
-- `/` [GET]
-    - simple root endpoint (used mostly for smoke testing)
-    - response: `plain/text` with the project name
-
-- `/config.xml` [GET]
-    - The LTI app configuration inside canvas is done via an XML document using the IMS Common Cartridge specification
-    - https://www.imsglobal.org/cc/index.html.
-    - response: `application/xml` with the config.
-
-### Credentials management
-
-- `/credentials/new` [GET]
-    - render new credentials form
-
-- `/credentials` [POST]
-    - build new credentials pair and return to the user
-
-### Google Oauth2
-
-used internally
-
-- `/google-auth` [GET]
-    - Redirect to Google's authorization page if we don't have the credentials yet.
-
-- `/google-auth/callback` [GET]
-    - handle the callback from google after authorization
-
-### LTI endpoints
-
-All LTI launch requests are done via `POST`
-
-- `/lti/gdrive-list` [POST]
-    - Renders a google drive list.
-    - This action is used internally on XHR requests, after we've accessed a LTI launch url.
-    - authentication: `session user`, `google credentials` and `csrf token`
-    -  Params:
-       * `folder_id` : list the contents of this folder
-       * `search_term` : term to search on the user's drive file names
-       * `action` : which kind of action should be enabled when a file is selected
-
-- `/lti/course-navigation` [POST]
-    - Launch url for course navigation (tab shown on the course sidebar)
-    - The *navigate* action just open the gdrive file in a new browser tab.
-    - authentication: `lti request` and `google credentials`
-    - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
-
-- `/lti/editor-selection` [POST]
-    - Launch url for editor selection (button inside the rich-text editor fields)
-    - The *select* action shows the options for `link` or `embed` the file in the content.
-    - authentication: `lti request` and `google credentials`
-    - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
-
-- `/lti/resource-selection` [POST]
-    - Launch url for resource selection (module -> add item -> external tool)
-    - The *link_resource* action generate a lti-link for the resource selected.
-    - authentication: `lti request` and `google credentials`
-    - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
-
-- `/lti/link-selection` [POST]
-    - Launch url for resource selection (module -> add item -> external tool)
-    - The *link_resource* action generate a lti-link for the resource selected.
-    - authentication: `lti request` and `google credentials`
-    - `resource-selection` and `link-selection` are the same.
-    - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
-
-- `/lti/resources/:file_id` [POST]
-    - Simple proxy for a drive document called from a LtiLinkItem.
-    - authentication: `lti request`
-    - Params:
-        * file_id : the gdrive file id
-        * LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
-
-- `/lti/homework-submission` [POST]
-    - Launch url for homework submission (tab on the assignment submission form)
-    - The *submit* action generate a lti-link object (https://www.imsglobal.org/specs/lticiv1p0/specification-1).
-    - This object is later used to embed an html snapshot of the file on the speed-grader.
-    - authentication: `lti request` and `google credentials`
-    - Params: LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
-
-- `/lti/documents` [POST]
-    - Generate an HTML snapshot of the google drive document
-    - authentication: `session user`, `google credentials` and `csrf token`
-    - Params:
-       * file_id : the gdrive file id
-
-- `/lti/documents/:file_id` [POST]
-    - Renders the document snapshot HTML content for embeding on the speed-grader
-    - Usually called from a `LtiLinkItem` object on Canvas.
-    - authentication: `lti request`
-    - Params:
-       * file_id : the gdrive file id
-       * LTI Launch (http://www.imsglobal.org/specs/ltiv1p0/implementation-guide) from Canvas
-
-
-## LICENSE
-
-This project is licensed under [GPL3](https://tldrlegal.com/license/gnu-general-public-license-v3-\(gpl-3\))
+- On god, this needs CI/CD. Just come in one slow Monday morning and yeet it. 
+- This LTI requires a couple manual steps to setup (copy config URL, generate key and secret) which takes time and requires the user to visit multiple pages. This *COULD* be accomplished via an API (tools can be configured this way) so this entire process could be automated.
+- The app can be used with any Canvas instance, and isn't restricted by domain or anything to ensure that the instance is one of ours. We should do this fam. 
