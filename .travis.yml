@@ -20,7 +20,7 @@ addons:
       - python3-dev
 
 before_install:
-  - apt-get install python3-setuptools
+  - sudo apt-get install python3-setuptools
   - pip3 install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
 
