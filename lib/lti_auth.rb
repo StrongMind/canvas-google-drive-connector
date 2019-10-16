@@ -30,6 +30,10 @@ class LtiAuth
     true
   end
 
+  def error_body
+    "<div class='alert-error'>#{@error}</div>"
+  end
+
   private
 
   attr_reader :params, :url

@@ -1,6 +1,6 @@
 .loader {
   animation: load3 1.4s infinite linear;
-  background: linear-gradient(to right, $blue 10%, $white 42%);
+  background: linear-gradient(to right, $strongmind-bahama-blue 10%, $white 42%);
   border-radius: 50%;
   font-size: 10px;
   height: 11em;
@@ -25,7 +25,7 @@
   }
 
   &::before {
-    background: $blue;
+    background: $strongmind-bahama-blue;
     border-radius: 100% 0 0;
     content: '';
     height: 50%;

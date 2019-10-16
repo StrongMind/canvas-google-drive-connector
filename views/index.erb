@@ -1,0 +1,33 @@
+<h3 class="heading-main">Google Drive LTI Tool</h3>
+
+<div class="body-text">
+    <h3>This application's primary purpose is to provide added value for teachers looking to use Google Drive files in the StrongMind LMS.</h3>
+
+    <p>There are five main ways in which this application integrates with the StrongMind LMS:</p>
+    <ul>
+        <li>Embedding and linking documents from Google Drive anywhere you use the Rich Content Editor</li>
+        <li>Using Google Drive documents for collaborations</li>
+        <li>Linking to live Google Drive files from a module</li>
+        <li>Teachers: using a Google Doc to give an assignment, sending a copy of that document to each student assigned</li>
+        <li>Students: submitting Google Docs as assignments</li>
+    </ul>
+</div>
+
+<h3 class="heading-main">Installation instructions</h3>
+<div class="body-text">
+    <p>As an admin in the StrongMind LMS:</p>
+    <ol>
+        <li>Navigate to the school's apps settings by clicking <span>Admin > School Name > Settings > Apps</span>.</li>
+        <li>Click on the <span>+ App</span> button to configure a new external application.</li>
+        <li>Under <span>Configuration Type</span>, choose <span>By URL</span>.</li>
+        <li>Enter a name for your application.</li>
+        <li>Generate your <span>Consumer Key</span> and <span>Shared Secret</span> <a href="/credentials/new" target="_blank" title="Generate credentials">here</a>.</li>
+        <li>Paste the <span>Consumer Key</span> and <span>Shared Secret</span> you just generated into their respective fields in the StrongMind LMS.</li>
+        <li>Paste the <span>Config URL</span> below into the <span>Config URL</span> field in the LMS.</li>
+        <li>Verify that all the information you've entered is correct, then press <span>Submit.</span></li>
+    </ol>
+    <div class="config-container">
+        <p class="credential-label">Config URL:</p>
+        <p class="credential-value"><%= AppHelpers.url_for '/config.xml', full: true %></p>
+    </div>
+</div>

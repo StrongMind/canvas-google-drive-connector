@@ -1,0 +1,9 @@
+$light-grey: #ddd;
+$dark-grey: #555;
+$white: #fff;
+
+$strongmind-shark: rgb(33, 35, 41); // #212329
+$strongmind-sun: rgb(253, 180, 20); // #fdb414
+$strongmind-bahama-blue: rgb(0, 88, 136); // #005888
+
+$light-blue: lighten($strongmind-bahama-blue, 30%);

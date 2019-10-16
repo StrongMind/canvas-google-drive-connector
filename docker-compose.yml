@@ -15,7 +15,7 @@ services:
       - RDS_USERNAME=google-lti-connector
       - RDS_PASSWORD=password
       - RDS_PORT=5432
-      - LTI_APP_URL=http://127.0.0.1:3000
+      - LTI_APP_URL=http://127.0.0.1:5000
       - REDIS_URL=redis://cache:6379
       - SESSION_SECRET=afakesessionsecret
       - GOOGLE_KEY=notarealkey

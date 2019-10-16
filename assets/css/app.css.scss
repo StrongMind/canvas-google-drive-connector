@@ -1,33 +1,5 @@
-$text: #444;
-$blue: #206da0;
-$light-blue: lighten($blue, 30%);
-$light-grey: #ddd;
-$dark-grey: #555;
-$white: #fff;
-
-body {
-  color: $text;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
-}
-
-a {
-  color: $text;
-  text-decoration: none;
-}
-
-.container {
-  margin: 0 auto;
-  margin-bottom: -50px;
-  max-width: 900px;
-  min-height: 100%;
-
-  &::after {
-    content: '';
-    display: block;
-  }
-}
-
+@import 'colors';
+@import 'global';
 @import 'credentials';
 @import 'googleauth';
 @import 'gdrivelist';

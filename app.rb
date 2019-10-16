@@ -28,6 +28,10 @@ helpers AppHelpers
 # Config
 
 get '/' do
+  erb :'index'
+end
+
+get '/health' do
   'healthy'
 end
 
