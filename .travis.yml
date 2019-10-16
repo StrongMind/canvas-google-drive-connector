@@ -20,10 +20,9 @@ addons:
       - python3-dev
 
 before_install:
-  - 'curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"'
-  - 'unzip awscli-bundle.zip'
-  - './awscli-bundle/install -b ~/bin/aws'
-  - 'export PATH=~/bin:$PATH'
+  - apt-get install python3-setuptools
+  - pip3 install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
 
 script:
   - docker-compose up -d
