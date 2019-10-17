@@ -71,7 +71,7 @@ describe 'googleauth' do
     expect(Google::Auth::WebUserAuthorizer).to receive(:handle_auth_callback_deferred)
     get '/google-auth/callback'
     expect(last_response).to be_ok
-    expect(last_response).to have_css('.googleauth.success')
+    expect(last_response).to have_css('.success')
   end
 end
 

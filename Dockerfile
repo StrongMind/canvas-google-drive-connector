@@ -15,7 +15,6 @@ RUN bundle install
 COPY . $APP_HOME
 
 # DB migrations
-RUN bundle exec rake db:migrate
 RUN bundle exec rake assets:clean assets:precompile
 
 # Start server
