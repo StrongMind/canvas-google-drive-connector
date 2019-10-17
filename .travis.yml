@@ -24,7 +24,7 @@ before_install:
   - pip3 install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
   - gem install bundler -v '1.16.6'
-  - echo $TRAVIS_COMMIT
+  - echo TRAVIS_COMMIT:$TRAVIS_COMMIT
 
 script:
   - docker-compose up -d
