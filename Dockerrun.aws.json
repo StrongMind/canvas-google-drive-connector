@@ -1,7 +1,0 @@
-{
-    "AWSEBDockerrunVersion": "1",
-    "containerDefinitions": [{
-        "name": "strongmind/google-lti-connector",
-        "image": "448312246740.dkr.ecr.us-west-2.amazonaws.com/google-lti-connector:latest"
-    }]
-}
