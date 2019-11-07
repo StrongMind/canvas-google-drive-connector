@@ -8,5 +8,12 @@ build:
 push:
 	docker push $(repo):$(git_rev)
 	echo "Pushed web"
- 
+
+deploy_dev: build push 
+	./deploy_gdrive_lti.sh dev $(git_rev)
+
+deploy_prod: build push 
+	./deploy_gdrive_lti.sh production $(git_rev)
+
+
 

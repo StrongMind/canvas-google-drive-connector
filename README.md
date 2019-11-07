@@ -47,13 +47,13 @@ Replace `COMMIT_HASH` wth the actual hash of the image you want to deploy
 ### To deploy production
 
 ```
-./deploy_gdrive_lti.sh production COMMIT_HASH
+make deploy_production
 ```
 
 ### To deploy dev
 
 ```
-./deploy_gdrive_lti.sh dev COMMIT_HASH
+make deploy_dev
 ```
 
 ### To deploy to a new env

@@ -12,9 +12,6 @@ EB_BUCKET=elasticbeanstalk-us-west-2-448312246740
 
 ZIP=$TAG.zip
 
-echo $TAG
-echo $ZIP
-
 aws configure set default.region us-west-2
 
 # Authenticate against our Docker registry
