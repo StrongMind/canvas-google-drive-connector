@@ -70,8 +70,13 @@ class GDriveService
   #   file_id: google drive file ID
   #
   def fetch(file_id)
+    file_types = {
+      "application/vnd.google-apps.spreadsheet" => "text/csv",
+      "application/vnd.google-apps.document" => "text/html",
+    }
     file = service.get_file(file_id, fields: 'id, name, mimeType, webViewLink, iconLink')
-    content = service.export_file(file_id, 'text/html', download_dest: StringIO.new).string
+    file_type = file_types[file.mime_type]
+    content = service.export_file(file_id, file_type, download_dest: StringIO.new).string
     build_gdrive_file(file, content: content)
   end
 
